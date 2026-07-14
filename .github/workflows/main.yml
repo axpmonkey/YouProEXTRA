@@ -251,7 +251,7 @@ jobs:
       - name: Clone and Build Gonerino
         run: |
           git clone --quiet --depth=1 https://github.com/castdrian/Gonerino.git
-          perl -pi -e 's/NSMutableArray \*retVal = %orig\.mutableCopy;/NSMutableArray *retVal = ((NSArray *)%orig).mutableCopy;/g' Gonerino/sources/Tweak.x
+          perl -pi -e 's/NSMutableArray \*retVal = %orig\.mutableCopy;/NSArray *origButtons = %orig;\n    NSMutableArray *retVal = origButtons.mutableCopy;/g' Gonerino/sources/Tweak.x
           cd Gonerino && make clean package DEBUG=0 FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
           mv packages/*.deb ${{ github.workspace }}/gonerino.deb
 
